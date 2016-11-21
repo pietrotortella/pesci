@@ -4,8 +4,8 @@ import os,sys
 
 def control_json_conformity(fname, outfilename):
     """
-    This function takes as argument the name of a json file without extension, and produces a new json file with lists of
-    images with reported errors.
+    This function takes as argument the json file with a list of dictionary annotations, and produces a new json file
+    with lists of images with reported errors.
 
 
     Type of reported errors:
@@ -13,7 +13,8 @@ def control_json_conformity(fname, outfilename):
     Miss some feature: images in which some feature miss (find which one is up to the user)
     Overlapping squares: fish and non_fish squares overlap
     Bad x coordinates: the feature x has wrong coordinates (out of image shapes)
-    :param filename:
+    :param fname: name of input json file
+           outfilename: name of the file to be filled with reported errors
     :return:
     """
 
@@ -68,7 +69,6 @@ def control_json_conformity(fname, outfilename):
                 XNF = range(int(x), int(x + w + 1))
                 YNF = range(int(y), int(y + h + 1))
 
-            # Control for overlapping squares
             if d["class"] == 'head':
                 x = d["x"]
                 y = d["y"]
@@ -102,6 +102,7 @@ def control_json_conformity(fname, outfilename):
                 or listoftypes.count("low_fin")!=1 or listoftypes.count("head")!=1 or listoftypes.count("tail")!=1:
             nrtype_badlist.append(dict_it["filename"])
 
+        # Control for square overlappings. Try-except handles possibles non existing variables
         try:
             if len(list(set(XF) & set(XNF)))>0 and len(list(set(YF) & set(YNF)))>0:
                 overlap_badlist.append(dict_it["filename"])
