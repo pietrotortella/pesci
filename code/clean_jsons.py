@@ -65,10 +65,11 @@ if __name__ == '__main__':
     from config.folders import DATA_PATH, ANNOTATIONS_PATH, GOODANNOTATIONS_PATH
 
     json_names = os.listdir(ANNOTATIONS_PATH)
-    jsons_filepaths = [os.path.join(ANNOTATIONS_PATH, name) for name in json_names]
+#    jsons_filepaths = [os.path.join(ANNOTATIONS_PATH, name) for name in json_names]
+    jsons_filepaths = [os.path.join(ANNOTATIONS_PATH, 'ALB_Luca.json')]
     to_prepend = os.path.join(DATA_PATH, 'train')
 
-    newname = os.path.join(GOODANNOTATIONS_PATH, 'cleaned_all.json')
+    newname = os.path.join(GOODANNOTATIONS_PATH, 'small.json')
 
     jj, bads = clean_jsons(jsons_filepaths, to_prepend, save_filepath=newname)
 

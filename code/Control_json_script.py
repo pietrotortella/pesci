@@ -210,9 +210,9 @@ def control_json_conformity(fname, outfilename, clean_filename=None, verbose=0):
 
 
 if __name__ == '__main__':
-    infilename = '/home/terminale11/kaggle_fish/pesci/annotations/cleaned_tort.json'
-    outputfilename = '/home/terminale11/kaggle_fish/pesci/annotations/cleaned_tort-errors.json'
-    clean_filename = '/home/terminale11/kaggle_fish/pesci/annotations/cleaned_tort-clean.json'
+    infilename = '/home/terminale11/kaggle_fish/pesci/good_annotations/small.json'
+    outputfilename = '/home/terminale11/kaggle_fish/pesci/good_annotations/small-errors.json'
+    clean_filename = '/home/terminale11/kaggle_fish/pesci/good_annotations/small-no_errors.json'
     control_json_conformity(infilename, outputfilename, clean_filename)
 
 
