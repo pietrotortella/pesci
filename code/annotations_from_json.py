@@ -38,7 +38,7 @@ def pnt(annot):
 
     y = int(annot["y"])
 
-    return [x,y]
+    return [y,x]
 
 def rectannot(jsn,label):
 
@@ -139,4 +139,6 @@ LFIN_list=pointannot(jsn_file,"low_fin")
 #cd_point=pointannot(jsn_file,"fish")[0]['img_07898.jpg']
 
 #print cd_point
+
+
 
