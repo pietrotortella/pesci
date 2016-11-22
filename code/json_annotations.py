@@ -1,6 +1,5 @@
 ##IMPORTING REQUIRED PACKAGES
 import json
-import cv2
 from scipy import misc
 import matplotlib.pyplot as plt
 
