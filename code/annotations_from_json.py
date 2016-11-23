@@ -1,3 +1,18 @@
+#-----------------------------
+##PROGRAM DESCRIPTION
+
+##The program defines two main functions rectannot and pointannot.
+
+#INPUT
+# Both the functions take as input a json file containing annotations of some images and a @label.
+#For rectannot function the @label should be the annotation name of a rectangular annotation (e.g. "fish", "non_fish")
+#For pointannot function the @label should be the annotation name of a point annotation (e.g. "head", "tail", "up_fin", "low_fin")
+
+#OUTPUT
+#For both the functions the output is a dictionary having as keys the images filenames and as values the corresponding @label annotations
+#(e.g "fish"-annotations, or "head"-annotations)
+
+#----------------------------
 ##IMPORTING REQUIRED PACKAGES
 
 import json
@@ -6,9 +21,8 @@ import cv2
 
 import matplotlib.pyplot as plt
 
-#---------------------------------------------------------------------------------
-
-##DEFINING PRELIMINARY FUNCTIONS
+#------------------------------
+##DEFINING SOME PRELIMINARY FUNCTIONS
 
 def getPath(annot):
 
@@ -40,11 +54,14 @@ def pnt(annot):
 
     return [y,x]
 
+#--------------------------------------------
+##DEFINING THE TWO MAIN FUNCTIONS
+
 def rectannot(jsn,label):
 
-    ''' takes a json file and a label. It returns the list of dictionaries in the json file corresponding to annotation having class @label).
+    ''' takes a json file and a label. It returns a dictionary corresponding to label annotations).
 
-    @label could be "fish" or "non_fish" '''
+    label could be "fish" or "non_fish" '''
 
     data = json.loads(jsn)
 
@@ -60,7 +77,7 @@ def rectannot(jsn,label):
 
     rectangles = [annot for annot in annotations if annot["class"] == label]
 
-    rect_list = []
+    rect_dict = {}
 
     for rectangle in rectangles:
 
@@ -68,15 +85,16 @@ def rectannot(jsn,label):
 
         rect_img = rect(img, rectangle)
 
-        rect_list.append({getPath(rectangle)[-13:]:rect_img})
+        rect_dict.update({getPath(rectangle)[-13:]:rect_img})
 
-    return rect_list
+    return rect_dict
+
 
 def pointannot(jsn,label):
 
-    ''' takes a json file and a point label. It returns the list of the dictionaries in the json file corresponding to annotation having class @label).
+    ''' takes a json file and a point label. It returns the dictionary corresponding to label annotations).
 
-    @label could be "head" or "tail" or "up_fin" or low_fin'''
+    label could be "head", "tail", "up_fin" or "low_fin". '''
 
     data = json.loads(jsn)
 
@@ -92,53 +110,54 @@ def pointannot(jsn,label):
 
     points = [annot for annot in annotations if annot["class"] == label]
 
-    point_list = []
+    point_dict = {}
 
     for point in points:
 
         pc = pnt(point)
 
-        point_list.append({getPath(point)[-13:]:pc})
+        point_dict.update({getPath(point)[-13:]:pc})
 
-    return point_list
+    return point_dict
 
 #--------------------------------------
+## MAIN SCRIPT
 
-##CREATING FOR EACH ANNOTATION CLASS (FISH,NON_FISH, HEAD,TAIL,UP_FIN,DOWN_FIN) A LIST OF ALL THE ANNOTATIONS IN THAT CLASS
+#Reading the path where I have my image folder (e.g. the path of the folder DOL)
 
-#folder containing the json file
+mypath="/home/claudia/Kaggle_challenge/train/train"
 
-json_path = "/home/claudia/Desktop/Kaggle_challenge/train/train/annotations/TIN_DOL.json"
+#Opening the json file you want to work on
 
-#path of the folder containing all the folders of fish classes
+json_path = "/home/claudia/Kaggle_challenge/github_pesce/pesci/annotations/TIN_DOL.json"
 
-mypath = "/home/claudia/Desktop/Kaggle_challenge/train/train"
+'''folder containing the json file'''
 
 jsn_file = open(json_path).read()
 
-FISH_list= rectannot(jsn_file,"fish")
+# for each annotation label ("fish", "non_fish", "head", "tail", "fin_up","fin_low") a dictionary having as keys the image filenames and as values
+# the annotations with that label is created
 
-NONFISH_list=rectannot(jsn_file,"non_fish")
+FISH_dict= rectannot(jsn_file,"fish")
 
-HEAD_list=pointannot(jsn_file,"head")
+NONFISH_dict=rectannot(jsn_file,"non_fish")
 
-TAIL_list=pointannot(jsn_file,"tail")
+HEAD_dict=pointannot(jsn_file,"head")
 
-UFIN_list=pointannot(jsn_file,"up_fin")
+TAIL_dict=pointannot(jsn_file,"tail")
 
-LFIN_list=pointannot(jsn_file,"low_fin")
+UFIN_dict=pointannot(jsn_file,"up_fin")
 
-##Uncomment the following lines to show the first fish image of the list @FISH_list
+LFIN_dict=pointannot(jsn_file,"low_fin")
 
-#print rectannot(jsn_file,"fish")[0].keys()
+#---------------------------
 
-#sub_img=rectannot(jsn_file,"fish")[0]['img_07898.jpg']
+## TEST
+# for knowing if there are some images having less or more than six annotations
 
-#print pointannot(jsn_file,"head")[0].keys()
-
-#cd_point=pointannot(jsn_file,"fish")[0]['img_07898.jpg']
-
-#print cd_point
-
+#data = json.loads(jsn_file)
+# for i in range(len(data)):
+#     if len(data[i]["annotations"])!= 6:
+#         print data[i]["filename"][2:]
 
 

@@ -1,6 +1,6 @@
 ##IMPORTING REQUIRED PACKAGES
 import json
-import cv2
+from scipy import misc
 import matplotlib.pyplot as plt
 
 #---------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ def rectannot(jsn,label):
         for i in range(len(data[k]["annotations"])):
             if data[k]["annotations"][i]["class"] == label:
                 fish_dict = data[k]["annotations"][i]
-                img = cv2.imread(filenames[k])
+                img = misc.imread(filenames[k])
                 rect_img = rect(img, fish_dict)
                 rect_list.append({filenames[k][-13:]: rect_img})
 
@@ -73,10 +73,10 @@ def pointannot(jsn,label):
 ##CREATING FOR EACH ANNOTATION CLASS (FISH,NON_FISH, HEAD,TAIL,UP_FIN,DOWN_FIN) A LIST OF ALL THE ANNOTATIONS IN THAT CLASS
 
 #folder containing the json file
-json_path = "/home/marco/Desktop/Kaggle_challenge/train/annotations/check.json"
+json_path = "/home/terminale1/Desktop/Kaggle_challenge/train/annotations/check.json"
 
 #path of the folder containing all the folders of fish classes
-mypath = "/home/marco/Desktop/Kaggle_challenge/train/"
+mypath = "/home/terminale1/Desktop/Kaggle_challenge/train/"
 
 jsn_file = open(json_path).read()       #read json file
 
