@@ -1,5 +1,5 @@
 import os
-
+import copy
 import json
 
 
@@ -31,52 +31,50 @@ def clean_jsons(jsons_filepaths, to_prepend, save_filepath=None):
     """
     new_json = []
 
-    json_list = []
     bad_jsons = []
 
     for jfilepath in jsons_filepaths:
         try:
             with open(jfilepath, 'r') as inf:
-                json_list.append(json.load(inf))
+                now_json = json.load(inf, encoding='utf-8')
+
+            for now_dict in now_json:
+                new_dict = copy.deepcopy(now_dict)
+
+                now_filename = now_dict['filename']
+
+                split_filepath = now_filename.split('/')
+                last_part = '/'.join(split_filepath[-2:])
+
+                new_path = os.path.join(to_prepend, last_part)
+                new_dict['filename'] = new_path
+
+                new_json.append(new_dict)
 
         except ValueError:
             bad_jsons.append(jfilepath)
 
-
-    for now_json in json_list:
-        for now_dict in now_json:
-            new_dict = dict(now_dict)
-
-            now_filename = now_dict['filename']
-
-            split_filepath = now_filename.split('/')
-            last_part = '/'.join(split_filepath[-2:])
-
-            new_path = os.path.join(to_prepend, last_part)
-            new_dict['filename'] = new_path
-
-            new_json.append(new_dict)
-
-        if save_filepath is not None:
-            with open(save_filepath, 'w') as out_file:
-                json.dump(new_json, out_file)
+    if save_filepath is not None:
+        with open(save_filepath, 'w') as out_file:
+            json.dump(new_json, out_file, indent=4)
 
     return new_json, bad_jsons
 
 
 if __name__ == '__main__':
-    from config.folders import DATA_PATH, ANNOTATIONS_PATH
+    from config.folders import DATA_PATH, ANNOTATIONS_PATH, GOODANNOTATIONS_PATH
 
     json_names = os.listdir(ANNOTATIONS_PATH)
-    jsons_filepaths = [os.path.join(ANNOTATIONS_PATH, name) for name in json_names]
-
+#    jsons_filepaths = [os.path.join(ANNOTATIONS_PATH, name) for name in json_names]
+    jsons_filepaths = [os.path.join(ANNOTATIONS_PATH, 'ALB_Luca.json')]
     to_prepend = os.path.join(DATA_PATH, 'train')
 
-    newname = 'cleaned.json'
+    newname = os.path.join(GOODANNOTATIONS_PATH, 'small.json')
 
-    jj, bads = clean_jsons(jsons_filepaths, to_prepend, save_filepath=os.path.join(ANNOTATIONS_PATH, newname))
+    jj, bads = clean_jsons(jsons_filepaths, to_prepend, save_filepath=newname)
 
-    print 'wasnt able to process the files ', bads
+    if bads:
+        print 'wasnt able to process the files ', bads
 
     print 'Final entry sample', jj[0]
 
