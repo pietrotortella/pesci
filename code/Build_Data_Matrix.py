@@ -455,8 +455,12 @@ def chunkAndBuild(jsonInput, imagesPath, maxN):
 
 
 if __name__ == '__main__':
-    print len(sys.argv)
+    if len(sys.argv)==3:
+        print 'imagesPath = None'
+        imagesPath = None
+        maxN = int(sys.argv[2])
+    else:
+        imagesPath = sys.argv[2]
+        maxN = int(sys.argv[3])
     jsonInput = sys.argv[1]
-    imagesPath = sys.argv[2]
-    maxN = int(sys.argv[3])
     chunkAndBuild(jsonInput, imagesPath, maxN)
