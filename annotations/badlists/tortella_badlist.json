@@ -1,0 +1,89 @@
+Miss some feature:
+[
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04153.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04377.jpg"
+]
+Overlapping squares:
+[
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04163.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04229.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04301.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04307.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04340.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04377.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04489.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04609.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04778.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04780.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04852.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04950.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04963.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05039.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05153.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05237.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05283.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07271.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07335.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07349.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07358.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07406.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07424.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07454.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07463.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07476.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07477.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07486.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07511.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07520.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07522.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07558.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07567.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07576.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07603.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07639.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07651.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07652.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07662.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07671.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07694.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07810.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07874.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07879.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07904.jpg"
+]
+Bad fish coordinates:
+[
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04229.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04248.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04259.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04340.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04346.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04982.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05032.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05049.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05135.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05204.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_05225.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07380.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07452.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07465.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07540.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07549.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07669.jpg"
+]
+Bad non_fish coordinates:
+[
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04517.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04561.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_04893.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07608.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_07863.jpg"
+]
+Bad head coordinates:
+[]
+Bad tail coordinates:
+[]
+Bad up_fin coordinates:
+[]
+Bad low_fin coordinates:
+[]
