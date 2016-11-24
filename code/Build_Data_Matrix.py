@@ -240,12 +240,16 @@ def buildInputmatrix(jsonInput,imagesPath=None):
         data = json.load(data_file)
 
     # Cleaning input dictionary list json
+    data_copy = copy.copy(data)
     while {} in data: # remove possible empty dictionaries
-        data.remove({})
+        data_copy.remove({})
+    data = copy.copy(data_copy)
 
+    data_copy = copy.copy(data)
     for it in data: # remove possible dictionaries with empty 'annotations' value
         if it['annotations'] == []:
-            data.remove(it)
+            data_copy.remove(it)
+    data = copy.copy(data_copy)
 
     # Initialize input matrix X and target matrix Y
     X = np.empty((0,256*256))
@@ -451,8 +455,12 @@ def chunkAndBuild(jsonInput, imagesPath, maxN):
 
 
 if __name__ == '__main__':
-    print len(sys.argv)
+    if len(sys.argv)==3:
+        print 'imagesPath = None'
+        imagesPath = None
+        maxN = int(sys.argv[2])
+    else:
+        imagesPath = sys.argv[2]
+        maxN = int(sys.argv[3])
     jsonInput = sys.argv[1]
-    imagesPath = sys.argv[2]
-    maxN = int(sys.argv[3])
     chunkAndBuild(jsonInput, imagesPath, maxN)

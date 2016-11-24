@@ -10,6 +10,7 @@ import numpy as np
 from Detection.Fish import FishClass
 
 
+
 def find_between( s, first, last ):
     try:
         start = s.rfind( first ) + len( first )
@@ -20,39 +21,38 @@ def find_between( s, first, last ):
 
 fishList = []
 
-jsonFile = open('train/train/ANNOTATION/BET.json', 'r')
+jsonFile = open('FishDetectionFolder/train/train/ANNOTATION/BET.json', 'r')
 valuesBET = json.load(jsonFile)
 jsonFile.close()
 
-jsonFile = open('train/train/ANNOTATION/ALB.json', 'r')
+jsonFile = open('FishDetectionFolder/train/train/ANNOTATION/ALB.json', 'r')
 valuesALB = json.load(jsonFile)
 jsonFile.close()
 
-jsonFile = open('train/train/ANNOTATION/DOL.json', 'r')
+jsonFile = open('FishDetectionFolder/train/train/ANNOTATION/DOL.json', 'r')
 valuesDOL = json.load(jsonFile)
 jsonFile.close()
 
-jsonFile = open('train/train/ANNOTATION/LAG.json', 'r')
+jsonFile = open('FishDetectionFolder/train/train/ANNOTATION/LAG.json', 'r')
 valuesLAG = json.load(jsonFile)
 jsonFile.close()
 
-jsonFile = open('train/train/ANNOTATION/YFT.json', 'r')
+jsonFile = open('FishDetectionFolder/train/train/ANNOTATION/YFT.json', 'r')
 valuesYFT = json.load(jsonFile)
 jsonFile.close()
 
-jsonFile = open('train/train/ANNOTATION/SHARK.json', 'r')
+jsonFile = open('FishDetectionFolder/train/train/ANNOTATION/SHARK.json', 'r')
 valuesSHARK = json.load(jsonFile)
 jsonFile.close()
 
-jsonFile = open('train/train/ANNOTATION/OTHER.json', 'r')
+jsonFile = open('FishDetectionFolder/train/train/ANNOTATION/OTHER.json', 'r')
 valuesOTHER = json.load(jsonFile)
 jsonFile.close()
 
-
 #######################################################################
 print('Adding ALB to the fish list...')
-dirAddress = 'train/train/ALB/resize'
-dirAddressOriginal = 'train/train/ALB_ORIG'
+dirAddress = 'FishDetectionFolder/train/train/ALB/resize'
+dirAddressOriginal = 'FishDetectionFolder/train/train/ALB_ORIG'
 
 for i in range (len(valuesALB)):
 
@@ -126,8 +126,8 @@ for i in range (len(valuesALB)):
 print('ALB added to the fish list!')
 ####################################################
 print('Adding BET to the fish list...')
-dirAddress = 'train/train/BET/resize'
-dirAddressOriginal = 'train/train/BET_ORIG'
+dirAddress = 'FishDetectionFolder/train/train/BET/resize'
+dirAddressOriginal = 'FishDetectionFolder/train/train/BET_ORIG'
 
 for i in range (len(valuesBET)):
     fish = FishClass()
@@ -200,8 +200,8 @@ for i in range (len(valuesBET)):
 print('BET added to the fish list!')
 ####################################################
 print('Adding DOL to the fish list...')
-dirAddress = 'train/train/DOL/resize'
-dirAddressOriginal = 'train/train/DOL_ORIG'
+dirAddress = 'FishDetectionFolder/train/train/DOL/resize'
+dirAddressOriginal = 'FishDetectionFolder/train/train/DOL_ORIG'
 
 for i in range (len(valuesDOL)):
     fish = FishClass()
@@ -274,8 +274,8 @@ for i in range (len(valuesDOL)):
 print('DOL added to the fish list!')
 ####################################################
 print('Adding YFT to the fish list...')
-dirAddress = 'train/train/YFT/resize'
-dirAddressOriginal = 'train/train/YFT_ORIG'
+dirAddress = 'FishDetectionFolder/train/train/YFT/resize'
+dirAddressOriginal = 'FishDetectionFolder/train/train/YFT_ORIG'
 
 for i in range (len(valuesYFT)):
     fish = FishClass()
@@ -348,8 +348,8 @@ for i in range (len(valuesYFT)):
 print('YFT added to the fish list!')
 ####################################################
 print('Adding OTHER to the fish list...')
-dirAddress = 'train/train/OTHER/resize'
-dirAddressOriginal = 'train/train/OTHER_ORIG'
+dirAddress = 'FishDetectionFolder/train/train/OTHER/resize'
+dirAddressOriginal = 'FishDetectionFolder/train/train/OTHER_ORIG'
 
 for i in range (len(valuesOTHER)):
     fish = FishClass()
@@ -422,8 +422,8 @@ for i in range (len(valuesOTHER)):
 print('OTHER added to the fish list!')
 ####################################################
 print('Adding LAG to the fish list...')
-dirAddress = 'train/train/LAG/resize'
-dirAddressOriginal = 'train/train/LAG_ORIG'
+dirAddress = 'FishDetectionFolder/train/train/LAG/resize'
+dirAddressOriginal = 'FishDetectionFolder/train/train/LAG_ORIG'
 
 for i in range (len(valuesLAG)):
     fish = FishClass()
@@ -497,8 +497,8 @@ print('LAG added to the fish list!')
 
 ####################################################
 print('Adding SHARK to the fish list...')
-dirAddress = 'train/train/SHARK/resize'
-dirAddressOriginal = 'train/train/SHARK_ORIG'
+dirAddress = 'FishDetectionFolder/train/train/SHARK/resize'
+dirAddressOriginal = 'FishDetectionFolder/train/train/SHARK_ORIG'
 
 for i in range (len(valuesSHARK)):
     fish = FishClass()
@@ -575,4 +575,6 @@ def save_object(obj, filename):
         pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
 
 
-save_object(fishList, 'train/train/ANNOTATION/fishList.pkl')
+save_object(fishList, 'FishDetectionFolder/train/train/ANNOTATION/fishList.pkl')
+
+
