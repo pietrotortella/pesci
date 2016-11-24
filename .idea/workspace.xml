@@ -2,13 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="feaad095-0caa-44df-ac2b-2d39515ef8af" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/correct_adri_json.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/correct_paolo_json.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/code/Automatic_annotations_script.py" afterPath="$PROJECT_DIR$/Preprocessing/Automatic_annotations_script.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/code/Build_Data_Matrix.py" afterPath="$PROJECT_DIR$/Preprocessing/Build_Data_Matrix.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/code/Control_json_script.py" afterPath="$PROJECT_DIR$/Preprocessing/Control_json_script.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/code/Random_select_annotations.py" afterPath="$PROJECT_DIR$/Preprocessing/Random_select_annotations.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/code/Setting_annotations_filename_paths.py" afterPath="$PROJECT_DIR$/Preprocessing/Setting_annotations_filename_paths.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/ALL.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/ALL_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/adriano_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/andrea_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/carlo_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/claudia_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/farmani_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/francesco_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/luca_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/marco_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/naser_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/paolo_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/badlists/tortella_badlist.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/sparse annotations/andrea.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/sparse annotations/claudia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/sparse annotations/farmani.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/sparse annotations/francesco.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/sparse annotations/marco.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/sparse annotations/naser.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/annotations/sparse annotations/tortella.json" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/ALB_Luca.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/BET.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/SCA_ALB_2.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/TIN_DOL.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/TIN_LAG.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/adri.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/carlotardivo.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/farmani_ALB_2.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/loconti-ALB-2036-3145.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/loconti-YFT-0-1972.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/maiCorrected.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/paolo.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/tortella-ALB-4153-5286.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/annotations/tortella-ALB-7232-7917.json" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/annotations/ALB_Luca.json" afterPath="$PROJECT_DIR$/annotations/sparse annotations/luca.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/annotations/adri.json" afterPath="$PROJECT_DIR$/annotations/sparse annotations/adriano.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/annotations/carlotardivo.json" afterPath="$PROJECT_DIR$/annotations/sparse annotations/carlo.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/annotations/paolo.json" afterPath="$PROJECT_DIR$/annotations/sparse annotations/paolo.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GitHubClone.iws" />
@@ -29,11 +60,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Setting_annotations_filename_paths.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Setting_annotations_filename_paths.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Preprocessing/Setting_annotations_filename_paths.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ALL_badlist.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/annotations/badlists/ALL_badlist.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="344">
+              <caret line="85" column="70" selection-start-line="85" selection-start-column="70" selection-end-line="85" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -63,16 +104,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="adri.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/annotations/adri.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Control_json_script.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Preprocessing/Control_json_script.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -81,16 +112,6 @@
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ALL_clean.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/annotations/ALL_clean.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -181,7 +202,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Preprocessing" />
+              <option name="myItemId" value="annotations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="badlists" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -224,10 +249,6 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="CREATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/Classification/__init__.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/Classification/krizhevsky_method.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/Preprocessing/Annotations_global.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/Preprocessing/__init__.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Deleted" />
@@ -235,8 +256,7 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="true" />
           <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/code/Annotations_global.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/code/krizhevsky_method.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/annotations/farmani_alb_1.json</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Restored" />
@@ -486,17 +506,25 @@
       <option name="project" value="LOCAL" />
       <updated>1479988503912</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Ordering files in folders">
+      <created>1479993731507</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1479993731507</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1375" height="876" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29265255" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29265255" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -507,7 +535,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -544,7 +571,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="The fist script is to select a given a percentage of images uniformly distributed beteween class types.&#10;&#10;The second is to setting the filename paths to one passed from command line and possibly compatible with each own machine." />
     <MESSAGE value="script for correct the two jsons and the jsons corrected" />
-    <option name="LAST_COMMIT_MESSAGE" value="script for correct the two jsons and the jsons corrected" />
+    <MESSAGE value="Ordering files in folders" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ordering files in folders" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -625,6 +653,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/annotations/badlists/ALL_badlist.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="85" column="70" selection-start-line="85" selection-start-column="70" selection-end-line="85" selection-end-column="70" />
           <folding />
         </state>
       </provider>

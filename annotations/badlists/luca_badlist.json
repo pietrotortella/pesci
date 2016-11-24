@@ -1,0 +1,22 @@
+Miss some feature:
+[
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_00568.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_01070.jpg"
+]
+Overlapping squares:
+[
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_00568.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/ALB/img_01070.jpg"
+]
+Bad fish coordinates:
+[]
+Bad non_fish coordinates:
+[]
+Bad head coordinates:
+[]
+Bad tail coordinates:
+[]
+Bad up_fin coordinates:
+[]
+Bad low_fin coordinates:
+[]
