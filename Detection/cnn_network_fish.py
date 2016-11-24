@@ -24,8 +24,13 @@ import numpy as np
 import tensorflow as tf
 
 
-json_path = "/home/terminale8/Documents/pesci/annotations/TIN_DOL.json"
-mypath = "/home/terminale8/Documents/Kaggle_project/train"
+#json_path = "/home/terminale8/Documents/pesci/annotations/TIN_DOL.json"
+#mypath = "/home/terminale8/Documents/Kaggle_project/train"
+
+json_path = "/home/Desktop/pesci/annotations/TIN_DOL.json"
+mypath = "/home/Desktop/Kaggle_project/train/train"
+
+
 jsn_file = open(json_path).read()
 jsn_data = json.loads(jsn_file)
 
@@ -142,6 +147,7 @@ biases = {
 
 # Construct model
 pred = conv_net(x, weights, biases, keep_prob)
+print pred
 
 # Define loss and optimizer
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
