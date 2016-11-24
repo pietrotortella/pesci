@@ -1,11 +1,14 @@
-
 from __future__ import print_function
-import pickle
-import cv2
-import os
-import numpy as np
+
 import json
-from Fish import FishClass
+import os
+import pickle
+
+import cv2
+import numpy as np
+
+from Detection.Fish import FishClass
+
 
 def find_between( s, first, last ):
     try:
