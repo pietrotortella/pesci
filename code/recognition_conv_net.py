@@ -11,9 +11,20 @@ import tensorflow as tf
 #mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 
 from tensorflow.models.image.cifar10 import cifar10
+from prove import samples
 
-images = np.array()
-labels = np.array()
+filepath = '/home/terminale2/Documents/ALL_small.json'
+
+
+images,labels = samples(filepath = filepath)
+print ('Data loaded!')
+
+
+
+
+
+
+
 
 def next_batch(batch_dim, images, labels):
     perm = np.arange(labels.shape[0])
@@ -29,17 +40,61 @@ def oneHot(labels, n_classes):
         label_oneHot[j,labels[j]] = 1
     return label_oneHot
 
+def invoneHot(labels_OH, n_classes):
+    invlab = np.zeros(labels_OH.shape[0])
+    for j in range(labels_OH.shape[0]):
+        invlab[j] = np.argmax(labels_OH, axis=1)
+    return invlab
 
 
+# Split the database in 75% training set and 25% test set
+im_tr_D = dict()
+im_test_D = dict()
+lab_tr_D = dict()
+lab_test_D = dict()
 
+im_tr_to_concatenate = []
+im_test_to_concatenate = []
+lab_tr_to_concatenate = []
+lab_test_to_concatenate = []
+for i in range(0, 8):
+    loc_im = images[np.where(labels == i)[0], :]
+    loc_lab = labels[np.where(labels == i)[0], :]
+    loc_im, loc_lab = next_batch(len(loc_im), loc_im, loc_lab)
+
+    if len(loc_im)>4:
+        im_tr_D[i] = loc_im[0:int(len(loc_im) * 0.75)]
+        lab_tr_D[i] = loc_lab[0:int(len(loc_im) * 0.75)]
+        im_test_D[i] = loc_im[int(len(loc_im) * 0.75):]
+        lab_test_D[i] = loc_lab[int(len(loc_im) * 0.75):]
+        im_tr_to_concatenate.append(im_tr_D[i])
+        im_test_to_concatenate.append(im_test_D[i])
+        lab_tr_to_concatenate.append(lab_tr_D[i])
+        lab_test_to_concatenate.append(lab_test_D[i])
+
+im_tr = np.concatenate(im_tr_to_concatenate, axis=0)
+im_test = np.concatenate(im_test_to_concatenate, axis=0)
+lab_tr = np.concatenate(lab_tr_to_concatenate, axis=0)
+lab_test = np.concatenate(lab_test_to_concatenate, axis=0)
+
+print(im_tr.shape, im_test.shape, lab_tr.shape, lab_test.shape)
+
+#
+# im,lab = next_batch(labels.shape[0],images,labels)
+# #Training set
+# im_tr = im[0:int(labels.shape[0]*0.75)]
+# lab_tr = lab[0:int(labels.shape[0]*0.75)]
+# #Test set
+# im_test = im[int(labels.shape[0]*0.75),:]
+# lab_test = lab[int(labels.shape[0]*0.75),:]
 
 # Parameters
 learning_rate = 0.001
-training_iters = 200000
+training_iters = 160000
 batch_size = 200
 display_step = 10
 
-image_size = 64 # for a squared image, number of pixels (choosing only dimension divisible for two)
+image_size = 96 # for a squared image, number of pixels (choosing only dimension divisible for two)
 channels_number= 1 #if RGB channels_number = 3, 1 if gray
 kernel_dimension = 3
 number_pooling_layers = 5
@@ -50,16 +105,20 @@ image_dim_fin =  image_size/(2**number_pooling_layers)  #     image dimension af
 n_input = image_size*image_size #  data input
 
 n_classes = 8 # total classes (0-9 digits)
-dropout = 0.75 # Dropout, probability to keep units   -- it prevents overfitting
+dropout = 0.75 # Dropout, probability to turn off units   -- it prevents overfitting
 
 # tf Graph input
 x = tf.placeholder(tf.float32, [None, n_input])
 y = tf.placeholder(tf.float32, [None, n_classes])
+#reg_factor = tf.placeholder(tf.float32, name='regularization_factor')
 keep_prob = tf.placeholder(tf.float32) #dropout (keep probability)
-
+is_train =  tf.Variable(True,  name='training')
+reg_factor = tf.Variable(0.05)
 
 #one hot encoding
-labels = oneHot(labels, n_classes)
+lab_tr_OH = oneHot(lab_tr, n_classes)
+lab_test_OH = oneHot(lab_test, n_classes)
+
 
 # Create some wrappers for simplicity
 def conv2d(x, W, b, strides=1):
@@ -115,7 +174,7 @@ def conv_net(x, weights, biases, dropout):
     # Convolution Layer
     conv1 = conv2d(x, weights['wc1'], biases['bc1'])
     # Batch normalization
-    conv1 = batch_norm(conv1, weights['wc1'][3], True)
+    conv1 = batch_norm(conv1, 16, is_train)
     # RELU
     conv1 = tf.nn.relu(conv1)
     # Max Pooling (down-sampling)
@@ -124,7 +183,7 @@ def conv_net(x, weights, biases, dropout):
     # Convolution Layer
     conv2 = conv2d(conv1, weights['wc2'], biases['bc2'])
     # Batch normalization
-    conv2 = batch_norm(conv2, weights['wc2'][3], True)
+    conv2 = batch_norm(conv2, 64, is_train)
     # RELU
     conv2 = tf.nn.relu(conv2)
     # Max Pooling (down-sampling)
@@ -133,7 +192,7 @@ def conv_net(x, weights, biases, dropout):
     # Convolution Layer
     conv3 = conv2d(conv2, weights['wc3'], biases['bc3'])
     # Batch normalization
-    conv3 = batch_norm(conv3, weights['wc3'][3], True)
+    conv3 = batch_norm(conv3, 64, is_train)
     # RELU
     conv3 = tf.nn.relu(conv3)
     # Max Pooling (down-sampling)
@@ -142,7 +201,7 @@ def conv_net(x, weights, biases, dropout):
     # Convolution Layer
     conv4 = conv2d(conv3, weights['wc4'], biases['bc4'])
     # Batch normalization
-    conv4 = batch_norm(conv4, weights['wc4'][3], True)
+    conv4 = batch_norm(conv4, 64, is_train)
     # RELU
     conv4 = tf.nn.relu(conv4)
     # Max Pooling (down-sampling)
@@ -151,7 +210,7 @@ def conv_net(x, weights, biases, dropout):
     # Convolution Layer
     conv5 = conv2d(conv4, weights['wc5'], biases['bc5'])
     # Batch normalization
-    conv5 = batch_norm(conv5, weights['wc5'][3], True)
+    conv5 = batch_norm(conv5, 64, is_train)
     # RELU
     conv5 = tf.nn.relu(conv5)
     # Max Pooling (down-sampling)
@@ -201,14 +260,33 @@ biases = {
     'out': tf.Variable(tf.random_normal([n_classes]))
 }
 
+# List of weights
+weight_list = []
+for i in weights.keys():
+    weight_list.append(weights[i])
+for j in biases.keys():
+    weight_list.append(biases[j])
+
+
 # Construct model
 pred = conv_net(x, weights, biases, keep_prob)
 
 
 
 # Define loss and optimizer
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
-optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+cost_plain = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
+
+l2_norm = 0.
+for w in weights.keys():
+   l2_norm = tf.add(l2_norm, tf.nn.l2_loss(weights[w]))
+
+
+cost_regularization = tf.scalar_mul(reg_factor, l2_norm)
+
+cost = tf.add(cost_plain, cost_regularization)
+
+#cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost,var_list=weight_list)
 
 # Evaluate model
 correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
@@ -217,14 +295,20 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 # Initializing the variables
 init = tf.initialize_all_variables()
 
+# Calculate confusion matrix
+conf = tf.contrib.metrics.confusion_matrix(invoneHot(pred, n_classes), invoneHot(lab_test_OH, n_classes), num_classes=8, dtype=tf.int32)
+
 # Launch the graph
 with tf.Session() as sess:
+
+
+
     sess.run(init)
     step = 1
     # Keep training until reach max iterations
     while step * batch_size < training_iters:
         #batch_x, batch_y = database.train.next_batch(batch_size)
-        batch_x, batch_y = next_batch(batch_size)
+        batch_x, batch_y = next_batch(batch_size,im_tr,lab_tr_OH)
         # Run optimization op (backprop)
         sess.run(optimizer, feed_dict={x: batch_x, y: batch_y,
                                        keep_prob: dropout})
@@ -233,14 +317,27 @@ with tf.Session() as sess:
             loss, acc = sess.run([cost, accuracy], feed_dict={x: batch_x,
                                                               y: batch_y,
                                                               keep_prob: 1.})
-            print("Iter " + str(step*batch_size) + ", Minibatch Loss= " + \
+            print("Iter " + str(step) + ", Minibatch Loss= " + \
                   "{:.6f}".format(loss) + ", Training Accuracy= " + \
                   "{:.5f}".format(acc))
+
+            print("\n\nTesting Accuracy:", \
+                  sess.run(accuracy, feed_dict={x: im_test,
+                                                y: lab_test_OH,
+                                                keep_prob: 1.}))
+
         step += 1
     print("Optimization Finished!")
 
     # Calculate accuracy for n test images
     print("Testing Accuracy:", \
-        sess.run(accuracy, feed_dict={x: images[-650:],
-                                      y: labels[-650:],
+        sess.run(accuracy, feed_dict={x: im_test,
+                                      y: lab_test_OH,
                                       keep_prob: 1.}))
+
+    # Calculate confusion matrix
+    print (sess.run(conf, feed_dict={x: im_test,
+                                     y: lab_test_OH,
+                                     keep_prob: 1.}))
+
+
