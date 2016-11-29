@@ -23,8 +23,8 @@ for i in range(10):
     shuffle(fishList)
 
 print ('fish list length: ', len(fishList))
-testPercentage = int((80*len(fishList))/100)
-#80% set for training
+testPercentage = int((85*len(fishList))/100)
+#90% set for training
 fishListTrain = copy.copy(fishList[:testPercentage])
 print ('Train set length: ',len(fishListTrain))
 #20% set for training
@@ -39,7 +39,7 @@ display_step = 1
 
 # Network Parameters
 n_input = 65536 # (img shape: 256*256)
-n_classes = 10 # total out puts tailx, taily, headx, heady, upfin and downfin as well
+n_classes = 21 # total out puts tailx, taily, headx, heady, upfin and downfin as well
 dropout = 0.75 # Dropout, probability to keep units
 
 # tf Graph input
@@ -168,11 +168,11 @@ with tf.Session() as sess:
     while step * batch_size < training_iters:
         shuffle(fishListTrain)
         batch_x = np.empty((0, 65536), int)
-        batch_y = np.empty((0, 10), bool)
+        batch_y = np.empty((0, 21), bool)
         for i in range(batch_size):
             batch_x = np.append(batch_x, np.array([(fishListTrain[i].fishPixels)/255.0]), axis=0)
             #oneY = (fishListTrain[i].head_X, fishListTrain[i].head_Y, fishListTrain[i].tail_X, fishListTrain[i].tail_Y, fishListTrain[i].upfin_X, fishListTrain[i].upfin_Y, fishListTrain[i].lowfin_X, fishListTrain[i].lowfin_Y)
-            oneY = (1 if (fishListTrain[i].head_X>=0 and fishListTrain[i].head_X<24) else 0,  1 if (fishListTrain[i].head_X>=24 and fishListTrain[i].head_X<48) else 0, 1 if (fishListTrain[i].head_X>=48 and fishListTrain[i].head_X<70) else 0, 1 if (fishListTrain[i].head_X>=70 and fishListTrain[i].head_X<94) else 0, 1 if (fishListTrain[i].head_X>=94 and fishListTrain[i].head_X<118) else 0, 1 if (fishListTrain[i].head_X>=118 and fishListTrain[i].head_X<142) else 0, 1 if (fishListTrain[i].head_X>=142 and fishListTrain[i].head_X<166) else 0, 1 if (fishListTrain[i].head_X>=166 and fishListTrain[i].head_X<190) else 0, 1 if (fishListTrain[i].head_X>=190 and fishListTrain[i].head_X<214) else 0, 1 if (fishListTrain[i].head_X>=214 and fishListTrain[i].head_X<256) else 0)
+            oneY = (1 if (fishListTrain[i].head_X>=0 and fishListTrain[i].head_X<12) else 0,  1 if (fishListTrain[i].head_X>=12 and fishListTrain[i].head_X<24) else 0, 1 if (fishListTrain[i].head_X>=24 and fishListTrain[i].head_X<36) else 0, 1 if (fishListTrain[i].head_X>=36 and fishListTrain[i].head_X<48) else 0, 1 if (fishListTrain[i].head_X>=48 and fishListTrain[i].head_X<60) else 0, 1 if (fishListTrain[i].head_X>=60 and fishListTrain[i].head_X<72) else 0, 1 if (fishListTrain[i].head_X>=72 and fishListTrain[i].head_X<84) else 0, 1 if (fishListTrain[i].head_X>=84 and fishListTrain[i].head_X<96) else 0, 1 if (fishListTrain[i].head_X>=96 and fishListTrain[i].head_X<108) else 0, 1 if (fishListTrain[i].head_X>=108 and fishListTrain[i].head_X<120) else 0, 1 if (fishListTrain[i].head_X>=120 and fishListTrain[i].head_X<132) else 0,  1 if (fishListTrain[i].head_X>=132 and fishListTrain[i].head_X<144) else 0, 1 if (fishListTrain[i].head_X>=144 and fishListTrain[i].head_X<156) else 0, 1 if (fishListTrain[i].head_X>=156 and fishListTrain[i].head_X<168) else 0, 1 if (fishListTrain[i].head_X>=168 and fishListTrain[i].head_X<180) else 0, 1 if (fishListTrain[i].head_X>=180 and fishListTrain[i].head_X<192) else 0, 1 if (fishListTrain[i].head_X>=192 and fishListTrain[i].head_X<204) else 0, 1 if (fishListTrain[i].head_X>=204 and fishListTrain[i].head_X<216) else 0, 1 if (fishListTrain[i].head_X>=216 and fishListTrain[i].head_X<228) else 0, 1 if (fishListTrain[i].head_X>=228 and fishListTrain[i].head_X<240) else 0, 1 if (fishListTrain[i].head_X>=240 and fishListTrain[i].head_X<256) else 0)
             batch_y = np.append(batch_y, np.array([oneY]), axis=0)
             #print (oneY)
 
@@ -197,14 +197,25 @@ with tf.Session() as sess:
         step += 1
     print("Optimization Finished!")
 
+
     # Calculate accuracy for 20% test images
     test_x = np.empty((0, 65536), int)
-    test_y = np.empty((0, 8), float)
+    test_y = np.empty((0, 21), float)
     for test in fishListTest:
-        test_x = np.append(test_x, np.array([test.fishPixels]), axis=0)
-        oneY = [test.head_X, test.head_Y, test.tail_X, test.tail_Y, test.upfin_X, test.upfin_Y, test.lowfin_X, test.lowfin_Y]
+        test_x = np.append(test_x, np.array([test.fishPixels/255.0]), axis=0)
+        oneY = (1 if (test.head_X>=0 and test.head_X<12) else 0,  1 if (test.head_X>=12 and test.head_X<24) else 0, 1 if (test.head_X>=24 and test.head_X<36) else 0, 1 if (test.head_X>=36 and test.head_X<48) else 0, 1 if (test.head_X>=48 and test.head_X<60) else 0, 1 if (test.head_X>=60 and test.head_X<72) else 0, 1 if (test.head_X>=72 and test.head_X<84) else 0, 1 if (test.head_X>=84 and test.head_X<96) else 0, 1 if (test.head_X>=96 and test.head_X<108) else 0, 1 if (test.head_X>=108 and test.head_X<120) else 0, 1 if (test.head_X>=120 and test.head_X<132) else 0,  1 if (test.head_X>=132 and test.head_X<144) else 0, 1 if (test.head_X>=144 and test.head_X<156) else 0, 1 if (test.head_X>=156 and test.head_X<168) else 0, 1 if (test.head_X>=168 and test.head_X<180) else 0, 1 if (test.head_X>=180 and test.head_X<192) else 0, 1 if (test.head_X>=192 and test.head_X<204) else 0, 1 if (test.head_X>=204 and test.head_X<216) else 0, 1 if (test.head_X>=216 and test.head_X<228) else 0, 1 if (test.head_X>=228 and test.head_X<240) else 0, 1 if (test.head_X>=240 and test.head_X<256) else 0)
+        """
+        print("Real Y: ", oneY)
+        print(" ")
+        print("Prediction Y: ", sess.run(pred, feed_dict={x: np.array([test.fishPixels/255.0]), keep_prob: dropout}))
+        print(" ")
+        print("Correct? : ", sess.run(correct_pred, feed_dict={x: np.array([test.fishPixels/255.0]), y: np.array([oneY]), keep_prob: dropout}))
+        print(" ")
+        """
         test_y = np.append(test_y, np.array([oneY]), axis=0)
     print("Testing Accuracy:", \
         sess.run(accuracy, feed_dict={x: test_x,
                                       y: test_y,
                                       keep_prob: 1.}))
+
+
