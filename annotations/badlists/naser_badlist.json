@@ -1,0 +1,32 @@
+Miss some feature:
+[
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_01194.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_01118.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_01299.jpg"
+]
+Overlapping squares:
+[
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_07321.jpg"
+]
+Bad fish coordinates:
+[
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_04989.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_05369.jpg"
+]
+Bad non_fish coordinates:
+[
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_06636.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_05402.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_05262.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_04022.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_07734.jpg", 
+    "/home/terminale5/NemoChase_Project/data/train/BET/img_03051.jpg"
+]
+Bad head coordinates:
+[]
+Bad tail coordinates:
+[]
+Bad up_fin coordinates:
+[]
+Bad low_fin coordinates:
+[]

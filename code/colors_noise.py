@@ -12,7 +12,10 @@ import sys
 
 def saltpepper(image_file,p):
 
-    image = np.array(misc.imread(image_file))
+    if isinstance(image_file, str):
+        image = np.array(misc.imread(image_file))
+    else:
+        image = image_file
     output = image.copy()
     lim = 1-p
     rdn = np.random.random(image.shape)  # it creates a matrix of random floats in the interval [0,1)

@@ -39,7 +39,7 @@ def y_mirror(im, head, tail, ufin, lfin):
     :return: the same data as the parameters
     """
 
-    imret = np.array(im[:, :-1])
+    imret = np.array(im[:, ::-1])
     headret = (head[0], im.shape[1] - head[1])
     tailret = (tail[0], im.shape[1] - tail[1])
     ufinret = (ufin[0], im.shape[1] - ufin[1])
@@ -48,7 +48,7 @@ def y_mirror(im, head, tail, ufin, lfin):
     return imret, headret, tailret, ufinret, lfinret
 
 
-def get_passport_pic(im, head, tail, ufin, lfin, newshape=(64, 64)):
+def get_passport_pic(im, head, tail, ufin, lfin, newshape=(96, 96)):
     """
     Transform the image to obtain a passport-like picture.
     This consist in transforming the image to greyscale,
@@ -69,20 +69,57 @@ def get_passport_pic(im, head, tail, ufin, lfin, newshape=(64, 64)):
     proc_im = np.array(im)
     proc_im = rgb2grey(proc_im)
 
-    head_is_right = head[1] > tail[1]
-    ufin_is_up = ufin[0] < lfin[0]
-    if not head_is_right:
-        proc_im, head, tail, ufin, lfin = y_mirror(proc_im, head, tail, ufin, lfin)
-
-    if not ufin_is_up:
-        proc_im, head, tail, ufin, lfin = x_mirror(proc_im, head, tail, ufin, lfin)
-
-    slope = (head[0] - tail[0]) / (head[1] - tail[1])
+    slope = (head[1] - tail[1]) / (head[0] - tail[0] + 10 ** -8)
     theta = math.atan(slope)
-    theta = math.degrees(theta)
+    theta = math.degrees(-theta)
+
 
     proc_im  = rotate(proc_im, angle=theta)
     proc_im = resize(proc_im, newshape)
+
+
+
+    ver = np.array([head, tail, ufin, lfin])
+
+    x_ver = np.zeros(4)
+    y_ver = np.zeros(4)
+
+    theta_rad = - math.atan(slope)
+
+
+    for i in range(0, 4):
+        x_ver[i] = int(round(math.cos(theta_rad) * (ver[i, 0]) - math.sin(theta_rad) * (ver[i, 1])))
+        y_ver[i] = int(round(math.sin(theta_rad) * (ver[i, 0]) + math.cos(theta_rad) * (ver[i, 1])))
+
+    x_min = min(x_ver)
+    y_min = min(y_ver)
+
+    if x_min < 0:
+        x_trasl = -x_min
+    else:
+        x_trasl = 0
+
+    if y_min < 0:
+        y_trasl = -y_min
+    else:
+        y_trasl = 0
+
+    x_ver = x_ver + x_trasl
+    y_ver = y_ver + y_trasl
+
+    head = [x_ver[0],y_ver[0]]
+    tail = [x_ver[1],y_ver[1]]
+    ufin = [x_ver[2],y_ver[2]]
+    lfin = [x_ver[3],y_ver[3]]
+
+
+    head_is_up = head[0] < tail[0]
+    if not head_is_up:
+        proc_im, head, tail, ufin, lfin = x_mirror(proc_im, head, tail, ufin, lfin)
+    ufin_is_left = ufin[1] < lfin[1]
+    if not ufin_is_left:
+        proc_im, head, tail, ufin, lfin = y_mirror(proc_im, head, tail, ufin, lfin)
+
 
     return proc_im
 
