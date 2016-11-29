@@ -6,9 +6,18 @@ import copy
 import pickle
 
 ######################################################################
-with open('train/train/ANNOTATION/fishList.pkl', 'rb') as input:
+with open('/home/terminale3/PycharmProjects/PythonShare/FishDetectionFolder/train/train/ANNOTATION/fishList.pkl', 'rb') as input:
     fishList = pickle.load(input)
+
+"""
+for fish in fishList:
+    oneY = [fish.head_X, fish.head_Y, fish.tail_X, fish.tail_Y,
+            fish.upfin_X, fish.upfin_Y, fish.lowfin_X, fish.lowfin_Y]
+    print("One Y: ", oneY)
+"""
 #shuffling the list for 10 times
+print ('Fish list loaded with size: ', len(fishList))
+print ("Fish Pixels: ", fishList[0].fishPixels)
 print('Shuffling the list for 10 times...')
 for i in range(10):
     shuffle(fishList)
@@ -30,7 +39,7 @@ display_step = 1
 
 # Network Parameters
 n_input = 65536 # (img shape: 256*256)
-n_classes = 12 # total out puts - x, y, hight, width, tailx, taily, headx, heady
+n_classes = 10 # total out puts tailx, taily, headx, heady, upfin and downfin as well
 dropout = 0.75 # Dropout, probability to keep units
 
 # tf Graph input
@@ -62,26 +71,31 @@ def conv_net(x, weights, biases, dropout):
     conv1 = conv2d(x, weights['wc1'], biases['bc1'])
     # Max Pooling (down-sampling)
     conv1 = maxpool2d(conv1, k=2)
+    #conv1 = tf.nn.sigmoid(conv1)
 
     # Convolution Layer
     conv2 = conv2d(conv1, weights['wc2'], biases['bc2'])
     # Max Pooling (down-sampling)
     conv2 = maxpool2d(conv2, k=2)
+    #conv2 = tf.nn.sigmoid(conv2)
 
     # Convolution Layer
     conv3 = conv2d(conv2, weights['wc3'], biases['bc3'])
     # Max Pooling (down-sampling)
     conv3 = maxpool2d(conv3, k=2)
+    #conv3 = tf.nn.sigmoid(conv3)
 
     # Convolution Layer
     conv4 = conv2d(conv3, weights['wc4'], biases['bc4'])
     # Max Pooling (down-sampling)
     conv4 = maxpool2d(conv4, k=2)
+    #conv4 = tf.nn.sigmoid(conv4)
 
     # Convolution Layer
     conv5 = conv2d(conv4, weights['wc5'], biases['bc5'])
     # Max Pooling (down-sampling)
     conv5 = maxpool2d(conv5, k=2)
+    #conv5 = tf.nn.sigmoid(conv5)
 
     # Fully connected layer
     # Reshape conv2 output to fit fully connected layer input
@@ -127,12 +141,21 @@ biases = {
 pred = conv_net(x, weights, biases, keep_prob)
 
 # Define loss and optimizer
+#cost = tf.sqrt(tf.reduce_mean(tf.square(tf.sub(pred, y))))
+#cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
+#optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+
+# Evaluate model
+# Define loss and optimizer
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
 # Evaluate model
 correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+
+
+#accuracy = tf.reduce_mean(tf.abs(tf.sub(pred, y)))
 
 # Initializing the variables
 init = tf.initialize_all_variables()
@@ -145,15 +168,24 @@ with tf.Session() as sess:
     while step * batch_size < training_iters:
         shuffle(fishListTrain)
         batch_x = np.empty((0, 65536), int)
-        batch_y = np.empty((0, 12), int)
+        batch_y = np.empty((0, 10), bool)
         for i in range(batch_size):
-            batch_x = np.append(batch_x, np.array([fishListTrain[i].fishPixels]), axis=0)
-            oneY = [fishListTrain[i].fish_X, fishListTrain[i].fish_Y, fishListTrain[i].fish_H, fishListTrain[i].fish_W, fishListTrain[i].head_X, fishListTrain[i].head_Y, fishListTrain[i].tail_X, fishListTrain[i].tail_Y, fishListTrain[i].upfin_X, fishListTrain[i].upfin_Y, fishListTrain[i].lowfin_X, fishListTrain[i].lowfin_Y]
+            batch_x = np.append(batch_x, np.array([(fishListTrain[i].fishPixels)/255.0]), axis=0)
+            #oneY = (fishListTrain[i].head_X, fishListTrain[i].head_Y, fishListTrain[i].tail_X, fishListTrain[i].tail_Y, fishListTrain[i].upfin_X, fishListTrain[i].upfin_Y, fishListTrain[i].lowfin_X, fishListTrain[i].lowfin_Y)
+            oneY = (1 if (fishListTrain[i].head_X>=0 and fishListTrain[i].head_X<24) else 0,  1 if (fishListTrain[i].head_X>=24 and fishListTrain[i].head_X<48) else 0, 1 if (fishListTrain[i].head_X>=48 and fishListTrain[i].head_X<70) else 0, 1 if (fishListTrain[i].head_X>=70 and fishListTrain[i].head_X<94) else 0, 1 if (fishListTrain[i].head_X>=94 and fishListTrain[i].head_X<118) else 0, 1 if (fishListTrain[i].head_X>=118 and fishListTrain[i].head_X<142) else 0, 1 if (fishListTrain[i].head_X>=142 and fishListTrain[i].head_X<166) else 0, 1 if (fishListTrain[i].head_X>=166 and fishListTrain[i].head_X<190) else 0, 1 if (fishListTrain[i].head_X>=190 and fishListTrain[i].head_X<214) else 0, 1 if (fishListTrain[i].head_X>=214 and fishListTrain[i].head_X<256) else 0)
             batch_y = np.append(batch_y, np.array([oneY]), axis=0)
+            #print (oneY)
 
         # Run optimization op (backprop)
         sess.run(optimizer, feed_dict={x: batch_x, y: batch_y,
                                        keep_prob: dropout})
+        """
+        print ("batch_x[0]: ", batch_x[0])
+        print(" ")
+        print("Real Y: ", batch_y[0])
+        print(" ")
+        print ("Prediction Y: ", sess.run(pred, feed_dict={x: (batch_x[0],), keep_prob: dropout}))
+        """
         if step % display_step == 0:
             # Calculate batch loss and accuracy
             loss, acc = sess.run([cost, accuracy], feed_dict={x: batch_x,
@@ -167,10 +199,10 @@ with tf.Session() as sess:
 
     # Calculate accuracy for 20% test images
     test_x = np.empty((0, 65536), int)
-    test_y = np.empty((0, 8), int)
+    test_y = np.empty((0, 8), float)
     for test in fishListTest:
         test_x = np.append(test_x, np.array([test.fishPixels]), axis=0)
-        oneY = [test.fish_X, test.fish_Y, test.fish_H, test.fish_W, test.head_X, test.head_Y, test.tail_X, test.tail_Y, test.upfin_X, test.upfin_Y, test.lowfin_X, test.lowfin_Y]
+        oneY = [test.head_X, test.head_Y, test.tail_X, test.tail_Y, test.upfin_X, test.upfin_Y, test.lowfin_X, test.lowfin_Y]
         test_y = np.append(test_y, np.array([oneY]), axis=0)
     print("Testing Accuracy:", \
         sess.run(accuracy, feed_dict={x: test_x,
