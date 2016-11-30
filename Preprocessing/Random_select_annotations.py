@@ -25,7 +25,7 @@ def random_select_annotations(jsonInput,percentage,jsonOutput):
     # Creation of the new list
     newlist = []
     for l in labels:
-        n = int(percentage * howmany[l])
+        n = int(float(percentage) * howmany[l])
         print 'Selecting', n, 'elements of', l, 'type'
         # Extract n dictionaries with file of type l
         indices = [x[0] for x in label_list if x[1] == l]
