@@ -67,7 +67,7 @@ def get_passport_pic(im, head, tail, ufin, lfin, newshape=(96, 96)):
     """
 
     proc_im = np.array(im)
-    proc_im = rgb2grey(proc_im)
+    #proc_im = rgb2grey(proc_im)
 
     slope = (head[1] - tail[1]) / (head[0] - tail[0] + 10 ** -8)
     theta = math.atan(slope)
