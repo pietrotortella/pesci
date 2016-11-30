@@ -29,7 +29,10 @@ def saltpepper(image_file,p):
 # function that produces a new image with randomly modified colors
 # var: a,b,c random floats in the interval [0. 1)
 def changecolour(image_file,a,b,c):
-    image = np.array(misc.imread(image_file))
+    if isinstance(image_file, str):
+        image = np.array(misc.imread(image_file))
+    else:
+        image = image_file
     img_mod = [image[:,:,0]*a,image[:,:,1]*b,image[:,:,2]*c]
     img_mod = np.swapaxes(img_mod, 0, 1)
     img_mod = np.swapaxes(img_mod, 1, 2)

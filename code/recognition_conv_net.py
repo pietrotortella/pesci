@@ -8,7 +8,7 @@ import tensorflow as tf
 import math
 import cv2
 from skimage.transform import rotate
-from colors_noise import saltpepper
+from colors_noise import saltpepper, changecolour
 import matplotlib.pyplot as plt
 #from ... import fishdatabase   #import data from fishdatabase
 
@@ -18,15 +18,22 @@ import matplotlib.pyplot as plt
 from tensorflow.models.image.cifar10 import cifar10
 from create_database import samples
 
-filepath = '/home/terminale2/Documents/ALL_small.json'
+filepath = '/home/terminale2/Documents/small_test_database.json'
 
 
 def get_transformed_ims(im):
-    MAX_TRANS = 0.35
-    MAX_SP = 0.08
-    MAX_TILT = 12
+    MAX_TRANS = 0.2
+    MAX_SP = 0.0
+    MAX_TILT = 5.
+    MAX_color = 0.1
 
     trans_im = np.array(im)
+
+    a = np.random.random([1])*MAX_color
+    b = np.random.random([1])*MAX_color
+    c = np.random.random([1])*MAX_color
+    trans_im, _ = changecolour(trans_im,a,b,c)
+
     sp_perc = np.random.rand(1)[0] * MAX_SP
     trans_im, _ = saltpepper(trans_im, sp_perc)
 
@@ -62,7 +69,7 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
 
 
 
-    def next_batch(batch_dim, images, labels):
+    def next_batch_t(batch_dim, images, labels):
         perm = np.arange(labels.shape[0])
         np.random.shuffle(perm)
         im = images[perm]
@@ -72,10 +79,18 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
         trans_batch = np.zeros_like(batch_im)
         for i in range (batch_dim):
             this_image = batch_im[i]
-            this_image = this_image.reshape([96,96])
+            this_image = this_image.reshape([image_size,image_size,channels_number])
             this_image = get_transformed_ims(this_image)
             trans_batch[i] = this_image.flatten()
         return trans_batch, lab[start:batch_dim]
+
+    def next_batch(batch_dim, images, labels):
+        perm = np.arange(labels.shape[0])
+        np.random.shuffle(perm)
+        im = images[perm]
+        lab = labels[perm]
+        start = 0
+        return im[start:batch_dim], lab[start:batch_dim]
 
     def oneHot(labels, n_classes):
         label_oneHot = np.zeros([labels.shape[0], n_classes])
@@ -112,7 +127,9 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
             lab_test_to_concatenate.append(lab_test_D[i])
 
     im_tr = np.concatenate(im_tr_to_concatenate, axis=0)
+    #im_tr = np.array(im_tr)/255.
     im_test = np.concatenate(im_test_to_concatenate, axis=0)
+    #im_test = np.array(im_test)/255.
     lab_tr = np.concatenate(lab_tr_to_concatenate, axis=0)
     lab_test = np.concatenate(lab_test_to_concatenate, axis=0)
 
@@ -131,21 +148,21 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
     # Parameters
     learning_rate = 0.001
     training_iters = niter
-    batch_size = 200
+    batch_size = 5 #200
     display_step = 10
 
     image_size = 96 # for a squared image, number of pixels (choosing only dimension divisible for two)
-    channels_number= 1 #if RGB channels_number = 3, 1 if gray
+    channels_number= 3 #if RGB channels_number = 3, 1 if gray
     kernel_dimension = 3
     number_pooling_layers = 5
     image_dim_fin =  image_size/(2**number_pooling_layers)  #     image dimension after all pooling layers
 
 
     # Network Parameters
-    n_input = image_size*image_size #  data input
+    n_input = image_size*image_size*channels_number #  data input
 
     n_classes = 8 # total classes (0-9 digits)
-    dropout = 0.75 # Dropout, probability to turn off units   -- it prevents overfitting
+     # Dropout, probability to turn off units   -- it prevents overfitting
 
     # tf Graph input
     x = tf.placeholder(tf.float32, [None, n_input])
@@ -209,7 +226,7 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
     # Create model
     def conv_net(x, weights, biases, dropout):
         # Reshape input picture
-        x = tf.reshape(x, shape=[-1, image_size, image_size, 1])
+        x = tf.reshape(x, shape=[-1, image_size, image_size, channels_number])
 
         # Convolution Layer
         conv1 = conv2d(x, weights['wc1'], biases['bc1'])
@@ -253,13 +270,31 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
         conv5 = batch_norm(conv5, 64, is_train)
         # RELU
         conv5 = tf.nn.relu(conv5)
+
+        # Convolution Layer
+        conv6 = conv2d(conv5, weights['wc6'], biases['bc6'])
+        # Batch normalization
+        conv6 = batch_norm(conv6, 64, is_train)
+        # RELU
+        conv6 = tf.nn.relu(conv6)
+
+        # Convolution Layer
+        conv7 = conv2d(conv6, weights['wc7'], biases['bc7'])
+        # Batch normalization
+        conv7 = batch_norm(conv7, 64, is_train)
+        # RELU
+        conv7 = tf.nn.relu(conv7)
+
+
+
+
         # Max Pooling (down-sampling)
-        conv5 = maxpool2d(conv5, k=2)
+        conv7 = maxpool2d(conv7, k=2)
 
 
         # Fully connected layer
         # Reshape conv5 output to fit fully connected layer input
-        fc1 = tf.reshape(conv5, [-1, weights['wd1'].get_shape().as_list()[0]])
+        fc1 = tf.reshape(conv7, [-1, weights['wd1'].get_shape().as_list()[0]])
         fc1 = tf.add(tf.matmul(fc1, weights['wd1']), biases['bd1'])
         fc1 = tf.nn.relu(fc1)
         # Apply Dropout
@@ -284,6 +319,10 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
         'wc4': tf.Variable(tf.random_normal([kernel_dimension, kernel_dimension, 64, 64])),
         # 3x3 conv, 64 inputs, 64 outputs
         'wc5': tf.Variable(tf.random_normal([kernel_dimension, kernel_dimension, 64, 64])),
+        # 3x3 conv, 64 inputs, 64 outputs
+        'wc6': tf.Variable(tf.random_normal([kernel_dimension, kernel_dimension, 64, 64])),
+        # 3x3 conv, 64 inputs, 64 outputs
+        'wc7': tf.Variable(tf.random_normal([kernel_dimension, kernel_dimension, 64, 64])),
         # fully connected, 3*3*64 inputs, 1024 outputs
         'wd1': tf.Variable(tf.random_normal([image_dim_fin*image_dim_fin*64, 1024])),   #weights of the first fully-connected layer
         # 1024 inputs, 8 outputs (class prediction)
@@ -296,6 +335,8 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
         'bc3': tf.Variable(tf.random_normal([64])),
         'bc4': tf.Variable(tf.random_normal([64])),
         'bc5': tf.Variable(tf.random_normal([64])),
+        'bc6': tf.Variable(tf.random_normal([64])),
+        'bc7': tf.Variable(tf.random_normal([64])),
         'bd1': tf.Variable(tf.random_normal([1024])),
         'out': tf.Variable(tf.random_normal([n_classes]))
     }
@@ -316,7 +357,7 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
     # Define loss and optimizer
     cost_plain = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
 
-    l2_norm = 0.
+    l2_norm = tf.Variable(0.)
     for w in weights.keys():
        l2_norm = tf.add(l2_norm, tf.nn.l2_loss(weights[w]))
 
@@ -335,6 +376,8 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
     # Initializing the variables
     init = tf.initialize_all_variables()
 
+    train_acc_history = []
+    test_acc_history = []
 
     # Launch the graph
     with tf.Session() as sess:
@@ -346,23 +389,42 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
         # Keep training until reach max iterations
         while step * batch_size < training_iters:
             #batch_x, batch_y = database.train.next_batch(batch_size)
-            batch_x, batch_y = next_batch(batch_size,im_tr,lab_tr_OH)
+            batch_x, batch_y = next_batch_t(batch_size,im_tr,lab_tr_OH)
             # Run optimization op (backprop)
             sess.run(optimizer, feed_dict={x: batch_x, y: batch_y,
                                            keep_prob: dropout})
+
+
+
             if step % display_step == 0:
+
+
                 # Calculate batch loss and accuracy
                 loss, acc = sess.run([cost, accuracy], feed_dict={x: batch_x,
                                                                   y: batch_y,
                                                                   keep_prob: 1.})
+                train_acc_history.append(acc)
                 print("Iter " + str(step) + ", Minibatch Loss= " + \
                       "{:.6f}".format(loss) + ", Training Accuracy= " + \
                       "{:.5f}".format(acc))
 
-                print("\n\nTesting Accuracy:", \
-                      sess.run(accuracy, feed_dict={x: im_test,
+                cost_acc = sess.run(accuracy, feed_dict={x: im_test,
                                                     y: lab_test_OH,
-                                                    keep_prob: 1.}))
+                                                    keep_prob: 1.})
+                print("\n\nTesting Accuracy:", cost_acc)
+                test_acc_history.append(cost_acc)
+
+                plt.ion()
+                plt.subplot(211)
+                plt.axis([0, training_iters / batch_size, 0.4, 1])
+                plt.plot(list(range(len(test_acc_history))),test_acc_history)
+                plt.subplot(212)
+
+                plt.subplot(212)
+                plt.axis([0, training_iters / batch_size, 0.4, 1])
+                plt.plot(list(range(len(train_acc_history))), train_acc_history)
+
+                plt.pause(0.05)
 
             step += 1
         print("Optimization Finished!")
@@ -385,7 +447,7 @@ def iterate_networks(filepath, dropout, regular_factor, niter):
     for i in range(len(a)):
         conf_matrix[lab_test[i],a[i]] +=1
 
-    return conf_matrix, acc_test, acc
+    return conf_matrix, acc_test, acc, train_acc_history, test_acc_history
 
 
 if __name__ == '__main__':

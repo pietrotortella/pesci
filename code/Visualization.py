@@ -5,9 +5,11 @@ import pandas as pd
 
 accuracytest_folder = 'accuracy/test'
 accuracytrain_folder = 'accuracy/train'
+confusion_folder = 'confusion_matrix'
 
 name_test = os.listdir(accuracytest_folder)
 name_train = os.listdir(accuracytrain_folder)
+name_conf = os.listdir(confusion_folder)
 
 test_results = pd.DataFrame()
 
@@ -56,3 +58,18 @@ test_results = test_results.set_index(np.abs(test_results.index)[np.abs(test_res
 print train_results
 
 print test_results
+
+for name in name_conf:
+    filepath = os.path.join(confusion_folder, name)
+    try:
+        dropout = float(name[12:16])
+        reg = float(name[17:-4])
+    except ValueError:
+        dropout = float(name[12:15])
+        reg = float(name[16:-4])
+
+
+    this_conf = np.load(filepath)
+    acc_cal = np.sum(np.diagonal(this_conf)) / np.sum(this_conf)
+
+    print dropout, reg, acc_cal
