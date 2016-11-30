@@ -3,6 +3,7 @@ from scipy import misc, io
 import os,sys
 import numpy as np
 import pandas as pd
+import copy
 
 def convertToGreyscale(namejpg):
     image_rgb = misc.imread(namejpg)
@@ -436,6 +437,9 @@ def saveHDF(F,X,Y,L,suffix):
     print "Files saved in "+suffix+'.h5'
 
 def chunkAndBuild(jsonInput, imagesPath, maxN):
+    # This function is used to chunk the building of data matrices considering a number of starting images maxN
+    # First two inputs are the same of the function "buildInputmatrix". More the one HDF file will be created containing
+    # data relative to a number of images equal to maxN*8 (considering all transformations).
     with open(jsonInput) as data_file:
         data = json.load(data_file)
     for c in range(0,len(data),maxN)[:-1]:
