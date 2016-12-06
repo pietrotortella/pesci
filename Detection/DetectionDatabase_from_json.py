@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 #-----------------------------------------
 #Getting the target set from the json file
 
-json_path="/home/terminale4/Desktop/kaggle_FishCompetition/train/train/annotations/ALL_clean.json"
+json_path="/home/terminale4/Desktop/kaggle_FishCompetition/train/train/annotations/ALL_clean_definitive.json"
 #json_path = "/home/terminale4/Desktop/kaggle_FishCompetition/train/train/annotations/TIN_DOL.json"
 mypath = "/home/terminale4/Desktop/kaggle_FishCompetition/train/train/"
 jsn_file = open(json_path).read()
